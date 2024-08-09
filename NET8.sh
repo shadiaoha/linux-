@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# 检查是否是root用户
+if [ "$EUID" -ne 0 ]; then
+    echo "请以root用户身份运行此脚本."
+    exit 1
+fi
+
 # 检查是否已经安装了ASP.NET Core运行时
 if dotnet --list-runtimes | grep -q "Microsoft.AspNetCore.App 8.0"; then
     echo "ASP.NET Core runtime 8.0 已经安装过了,不需再安装."
