@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#一键安装net8.0运行时脚本
+
 # 检查是否是root用户
 if [ "$EUID" -ne 0 ]; then
     echo "请以root用户身份运行此脚本."
