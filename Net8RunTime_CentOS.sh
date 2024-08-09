@@ -41,4 +41,3 @@ else
     echo -e "\033[31mASP.NET Core runtime 8.0 安装失败.\033[0m"
     exit 1
 fi
-
