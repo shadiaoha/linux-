@@ -8,8 +8,14 @@ if [ "$EUID" -ne 0 ]; then
     exit 1
 fi
 
+# 检查系统是否是Debian
+if ! grep -q "Debian" /etc/os-release; then
+    echo -e "\033[31m此脚本仅支持Debian系统.\033[0m"
+    exit 1
+fi
+
 # 检查是否已经安装了ASP.NET Core运行时
-if dotnet --list-runtimes | grep -q "Microsoft.AspNetCore.App 8.0"; then
+if command -v dotnet &> /dev/null && dotnet --list-runtimes | grep -q "Microsoft.AspNetCore.App 8.0"; then
     echo -e "\033[32mASP.NET Core runtime 8.0 已经安装过了,不需再安装.\033[0m"
     exit 0
 fi
@@ -29,7 +35,7 @@ sudo apt-get install -y aspnetcore-runtime-8.0
 
 # 4. 验证安装
 echo "Verifying installation..."
-if dotnet --list-runtimes | grep -q "Microsoft.AspNetCore.App 8.0"; then
+if command -v dotnet &> /dev/null && dotnet --list-runtimes | grep -q "Microsoft.AspNetCore.App 8.0"; then
     echo -e "\033[32mASP.NET Core runtime 8.0 安装成功.\033[0m"
 else
     echo -e "\033[31mASP.NET Core runtime 8.0 安装失败.\033[0m"
