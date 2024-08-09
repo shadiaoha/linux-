@@ -1,2 +1,2 @@
-linux一键安装脚本合集
-Collection of linux one-click installation scripts
+linux一键脚本合集
+linux one-click script collection
