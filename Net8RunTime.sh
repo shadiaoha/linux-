@@ -20,11 +20,15 @@ if [ -f /etc/debian_version ]; then
     PACKAGE_UPDATE="apt-get update"
     PACKAGE_INSTALL="apt-get install -y"
     PACKAGE_URL="https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb"
+    PACKAGE_FILE="packages-microsoft-prod.deb"
+    INSTALL_CMD="dpkg -i"
 elif [ -f /etc/redhat-release ]; then
     PACKAGE_MANAGER="yum"
     PACKAGE_UPDATE="yum update -y"
     PACKAGE_INSTALL="yum install -y"
     PACKAGE_URL="https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm"
+    PACKAGE_FILE="packages-microsoft-prod.rpm"
+    INSTALL_CMD="rpm -Uvh"
 else
     echo -e "\033[31m不支持的操作系统.\033[0m"
     exit 1
@@ -32,8 +36,8 @@ fi
 
 # 1. 添加Microsoft包存储库
 echo "Adding Microsoft package repository..."
-wget $PACKAGE_URL -O packages-microsoft-prod.deb
-sudo dpkg -i packages-microsoft-prod.deb
+wget $PACKAGE_URL -O $PACKAGE_FILE
+sudo $INSTALL_CMD $PACKAGE_FILE
 
 # 2. 更新包索引
 echo "Updating package index..."
@@ -51,4 +55,3 @@ else
     echo -e "\033[31mASP.NET Core runtime 8.0 安装失败.\033[0m"
     exit 1
 fi
-
